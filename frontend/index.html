@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Personal Subscription Budget Tracker</title>
+    <link rel="stylesheet" href="/styles.css" />
+  </head>
+  <body>
+    <div class="app-shell">
+      <header class="topbar">
+        <div>
+          <p class="eyebrow">Subscription Budget</p>
+          <h1>Personal Subscription Budget Tracker</h1>
+        </div>
+        <div class="user-actions">
+          <span id="userBadge" class="user-badge"></span>
+          <a class="secondary-button" href="/api-docs" target="_blank" rel="noreferrer">Swagger</a>
+          <button id="logoutButton" class="secondary-button" type="button">Logout</button>
+        </div>
+      </header>
+
+      <main class="dashboard-layout">
+        <section class="summary-grid" aria-label="Budget summary">
+          <article class="summary-card">
+            <span>Monthly total</span>
+            <strong id="monthlyTotal">0.00</strong>
+          </article>
+          <article class="summary-card">
+            <span>Yearly total</span>
+            <strong id="yearlyTotal">0.00</strong>
+          </article>
+          <article class="summary-card">
+            <span>Budget remaining</span>
+            <strong id="budgetRemaining">0.00</strong>
+          </article>
+          <article class="summary-card">
+            <span>Upcoming payments</span>
+            <strong id="upcomingCount">0</strong>
+          </article>
+        </section>
+
+        <section class="workspace">
+          <aside class="form-panel">
+            <div class="panel-header">
+              <h2 id="formTitle">Add subscription</h2>
+              <button id="cancelEditButton" class="ghost-button hidden" type="button">Cancel</button>
+            </div>
+
+            <form id="subscriptionForm" class="subscription-form">
+              <input type="hidden" name="id" />
+              <label>
+                Name
+                <input type="text" name="name" required minlength="2" placeholder="Spotify Premium" />
+              </label>
+              <label>
+                Category
+                <input type="text" name="category" required minlength="2" placeholder="Entertainment" />
+              </label>
+              <div class="field-row">
+                <label>
+                  Price
+                  <input type="number" name="price" required min="0.01" step="0.01" placeholder="59.99" />
+                </label>
+                <label>
+                  Cycle
+                  <select name="billingCycle" required>
+                    <option value="monthly">Monthly</option>
+                    <option value="yearly">Yearly</option>
+                    <option value="weekly">Weekly</option>
+                  </select>
+                </label>
+              </div>
+              <label>
+                Next payment date
+                <input type="date" name="nextPaymentDate" required />
+              </label>
+              <label>
+                Status
+                <select name="status" required>
+                  <option value="active">Active</option>
+                  <option value="paused">Paused</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </label>
+              <label>
+                Payment method
+                <input type="text" name="paymentMethod" placeholder="Credit card" />
+              </label>
+              <label>
+                Notes
+                <textarea name="notes" rows="3" placeholder="Family plan, student discount, renewal detail"></textarea>
+              </label>
+              <button class="primary-button" type="submit">Save subscription</button>
+            </form>
+            <p id="formMessage" class="form-message" role="status"></p>
+          </aside>
+
+          <section class="list-panel">
+            <div class="filters">
+              <label>
+                Search
+                <input id="searchInput" type="search" placeholder="Name or category" />
+              </label>
+              <label>
+                Category
+                <input id="categoryInput" type="text" placeholder="All categories" />
+              </label>
+              <label>
+                Status
+                <select id="statusFilter">
+                  <option value="">All</option>
+                  <option value="active">Active</option>
+                  <option value="paused">Paused</option>
+                  <option value="cancelled">Cancelled</option>
+                </select>
+              </label>
+            </div>
+
+            <div id="budgetAlert" class="budget-alert hidden"></div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Category</th>
+                    <th>Price</th>
+                    <th>Cycle</th>
+                    <th>Next payment</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                  </tr>
+                </thead>
+                <tbody id="subscriptionTableBody"></tbody>
+              </table>
+            </div>
+
+            <div class="insights-grid">
+              <section class="insight-panel">
+                <h2>Upcoming</h2>
+                <ul id="upcomingList" class="compact-list"></ul>
+              </section>
+              <section class="insight-panel">
+                <h2>By category</h2>
+                <ul id="categoryList" class="compact-list"></ul>
+              </section>
+            </div>
+          </section>
+        </section>
+      </main>
+    </div>
+
+    <script src="/app.js"></script>
+  </body>
+</html>

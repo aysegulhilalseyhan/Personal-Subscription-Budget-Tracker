@@ -1,0 +1,31 @@
+{
+  "name": "personal-subscription-budget-tracker",
+  "version": "1.0.0",
+  "description": "A JWT-secured subscription budget tracker with user-specific data isolation.",
+  "main": "src/server.js",
+  "scripts": {
+    "start": "node src/server.js",
+    "dev": "node --watch src/server.js",
+    "seed": "node scripts/seed.js",
+    "test": "node --test tests/*.test.js"
+  },
+  "keywords": [
+    "subscription",
+    "budget",
+    "tracker",
+    "express",
+    "jwt",
+    "sqlite"
+  ],
+  "author": "Aysegul Hilal Seyhan",
+  "license": "MIT",
+  "dependencies": {
+    "bcryptjs": "^2.4.3",
+    "better-sqlite3": "^11.9.1",
+    "cors": "^2.8.5",
+    "express": "^4.21.2",
+    "jsonwebtoken": "^9.0.2",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1"
+  }
+}
