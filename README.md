@@ -41,6 +41,14 @@ Many people pay for several recurring services such as music, cloud storage, str
 
 ![Budget exceeded warning](./screenshots/dashboard-budget-exceeded.png)
 
+## User Guide
+
+For non-technical users, the project includes a plain text usage guide:
+
+```txt
+USER_GUIDE.txt
+```
+
 ## Requirement Mapping
 
 | Requirement | Implementation |

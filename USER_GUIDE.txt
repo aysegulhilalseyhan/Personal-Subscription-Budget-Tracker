@@ -1,0 +1,149 @@
+Personal Subscription Budget Tracker - User Guide
+
+1. What This Application Does
+
+Personal Subscription Budget Tracker helps users manage recurring subscriptions such as music, streaming, cloud storage, education platforms, and productivity tools.
+
+The application allows users to:
+- Create their own account
+- Log in securely
+- Add subscriptions
+- Edit subscription details
+- Delete subscriptions
+- Track monthly and yearly subscription costs
+- Set and update a monthly budget limit
+- See a warning when subscription spending exceeds the budget
+- View upcoming payments
+- Filter subscriptions by name, category, or status
+
+Each user's data is private. A user can only see and manage their own subscriptions.
+
+2. How To Start The Application
+
+Open a terminal in the project folder and run:
+
+npm install
+npm run seed
+npm start
+
+Then open this address in a browser:
+
+http://127.0.0.1:3000/auth.html
+
+3. Demo Accounts
+
+The project includes demo accounts for testing:
+
+user1@example.com / password123
+user2@example.com / password123
+
+These two accounts have separate data. This shows that the application protects each user's records.
+
+4. Registering A New User
+
+1. Open the login/register page.
+2. Click Register.
+3. Enter name, email, password, and monthly budget limit.
+4. Click Create account.
+5. The application opens the dashboard after successful registration.
+
+5. Logging In
+
+1. Open the login page.
+2. Enter email and password.
+3. Click Login.
+4. The dashboard will show only the logged-in user's subscriptions.
+
+6. Adding A Subscription
+
+Use the form on the left side of the dashboard.
+
+Required fields:
+- Name
+- Category
+- Price
+- Billing cycle
+- Next payment date
+- Status
+
+Optional fields:
+- Payment method
+- Notes
+
+After filling the form, click Save subscription.
+
+7. Editing A Subscription
+
+1. Find the subscription in the table.
+2. Click Edit.
+3. Update the form fields.
+4. Click Save subscription.
+
+8. Deleting A Subscription
+
+1. Find the subscription in the table.
+2. Click Delete.
+3. Confirm the deletion.
+
+9. Updating The Monthly Budget Limit
+
+1. Find the Monthly budget limit section above the subscription table.
+2. Enter a new budget value.
+3. Click Update budget.
+
+If the monthly subscription total is higher than the budget limit, the application shows a budget warning.
+
+10. Searching And Filtering
+
+The dashboard includes filters for:
+- Search by subscription name or category
+- Filter by category
+- Filter by status
+
+Status options:
+- Active
+- Paused
+- Cancelled
+
+11. Understanding The Dashboard
+
+Monthly total:
+Shows the current monthly cost of active subscriptions.
+
+Yearly total:
+Shows the estimated yearly cost of active subscriptions.
+
+Budget remaining:
+Shows how much budget remains after monthly subscription costs.
+
+Upcoming payments:
+Shows payments due in the next 7 days.
+
+By category:
+Shows monthly subscription spending grouped by category.
+
+12. API Documentation
+
+The API documentation can be opened here:
+
+http://127.0.0.1:3000/api-docs
+
+The API documentation is mainly for technical review and testing. It shows the available backend endpoints and allows testing them from the browser.
+
+13. Troubleshooting
+
+If the application does not open:
+- Make sure npm install was completed.
+- Make sure npm start is running.
+- Open http://127.0.0.1:3000/auth.html in the browser.
+
+If demo data is missing:
+- Run npm run seed again.
+
+If a new backend feature does not work:
+- Stop the server with Ctrl + C.
+- Start it again with npm start.
+
+If the database file looks empty in VS Code:
+- This is normal. The database is a SQLite file and is not meant to be read as plain text.
+- Data can be viewed through the application or with a SQLite database viewer.
