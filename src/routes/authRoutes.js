@@ -19,10 +19,18 @@ const router = express.Router();
  *     responses:
  *       201:
  *         description: User registered successfully
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/AuthResponse'
  *       400:
- *         description: Invalid input
+ *         $ref: '#/components/responses/BadRequest'
  *       409:
  *         description: Email already exists
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/ErrorResponse'
  */
 router.post('/register', authController.register);
 
@@ -41,8 +49,14 @@ router.post('/register', authController.register);
  *     responses:
  *       200:
  *         description: Login successful
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/AuthResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequest'
  *       401:
- *         description: Invalid credentials
+ *         $ref: '#/components/responses/Unauthorized'
  */
 router.post('/login', authController.login);
 
@@ -57,8 +71,15 @@ router.post('/login', authController.login);
  *     responses:
  *       200:
  *         description: Current user
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: object
+ *               properties:
+ *                 user:
+ *                   $ref: '#/components/schemas/User'
  *       401:
- *         description: Invalid or missing token
+ *         $ref: '#/components/responses/Unauthorized'
  */
 router.get('/me', requireAuth, authController.me);
 

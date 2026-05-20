@@ -17,6 +17,7 @@ Many people pay for several recurring services such as music, cloud storage, str
 - Upcoming payment tracking for the next 7 days
 - Category-based monthly spending summary
 - Budget limit comparison and budget-exceeded warning
+- Monthly budget limit update after login
 - Interactive Swagger/OpenAPI documentation
 - Unit tests for business logic and validation functions
 
@@ -105,6 +106,12 @@ These accounts are intentionally separate. When logged in as `user1`, only user1
 | POST | `/api/auth/login` | Login and receive a JWT |
 | GET | `/api/auth/me` | Get authenticated user profile |
 
+### Users
+
+| Method | Endpoint | Description |
+| --- | --- | --- |
+| PATCH | `/api/users/me/budget` | Update authenticated user's monthly budget limit |
+
 ### Subscriptions
 
 All subscription endpoints require:
@@ -159,6 +166,17 @@ The tests focus on business logic instead of route testing, as required:
 - Renewal status calculation
 - Budget summary generation
 - Subscription input validation
+- Budget input validation
+
+## Swagger Usage
+
+Swagger UI is available at:
+
+```txt
+http://localhost:3000/api-docs
+```
+
+The register and login endpoints can be tested without a token. After login, copy the JWT token from the response, click the `Authorize` button in Swagger, and paste the token. Then the protected subscription, user, and statistics endpoints can be tested interactively.
 
 ## Data Isolation Explanation
 

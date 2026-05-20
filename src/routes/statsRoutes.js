@@ -15,8 +15,12 @@ const router = express.Router();
  *     responses:
  *       200:
  *         description: User-specific budget statistics
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/StatsResponse'
  *       401:
- *         description: Invalid or missing token
+ *         $ref: '#/components/responses/Unauthorized'
  */
 router.get('/', requireAuth, subscriptionController.getStats);
 

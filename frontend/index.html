@@ -97,6 +97,15 @@
           </aside>
 
           <section class="list-panel">
+            <form id="budgetForm" class="budget-form">
+              <label>
+                Monthly budget limit
+                <input id="budgetLimitInput" type="number" min="0" step="0.01" />
+              </label>
+              <button class="secondary-button" type="submit">Update budget</button>
+              <p id="budgetMessage" class="inline-message" role="status"></p>
+            </form>
+
             <div class="filters">
               <label>
                 Search

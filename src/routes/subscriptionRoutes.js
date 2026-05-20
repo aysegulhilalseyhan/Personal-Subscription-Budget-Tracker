@@ -31,6 +31,14 @@ router.use(requireAuth);
  *     responses:
  *       200:
  *         description: User-specific subscription list
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SubscriptionListResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequest'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
  */
 router.get('/', subscriptionController.listSubscriptions);
 
@@ -51,8 +59,14 @@ router.get('/', subscriptionController.listSubscriptions);
  *     responses:
  *       201:
  *         description: Subscription created
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SubscriptionResponse'
  *       400:
- *         description: Invalid input
+ *         $ref: '#/components/responses/BadRequest'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
  */
 router.post('/', subscriptionController.createSubscription);
 
@@ -73,8 +87,14 @@ router.post('/', subscriptionController.createSubscription);
  *     responses:
  *       200:
  *         description: Subscription found
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SubscriptionResponse'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
  *       404:
- *         description: Subscription not found for this user
+ *         $ref: '#/components/responses/NotFound'
  */
 router.get('/:id', subscriptionController.getSubscription);
 
@@ -101,8 +121,16 @@ router.get('/:id', subscriptionController.getSubscription);
  *     responses:
  *       200:
  *         description: Subscription updated
+ *         content:
+ *           application/json:
+ *             schema:
+ *               $ref: '#/components/schemas/SubscriptionResponse'
+ *       400:
+ *         $ref: '#/components/responses/BadRequest'
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
  *       404:
- *         description: Subscription not found for this user
+ *         $ref: '#/components/responses/NotFound'
  */
 router.put('/:id', subscriptionController.updateSubscription);
 
@@ -123,8 +151,10 @@ router.put('/:id', subscriptionController.updateSubscription);
  *     responses:
  *       204:
  *         description: Subscription deleted
+ *       401:
+ *         $ref: '#/components/responses/Unauthorized'
  *       404:
- *         description: Subscription not found for this user
+ *         $ref: '#/components/responses/NotFound'
  */
 router.delete('/:id', subscriptionController.deleteSubscription);
 

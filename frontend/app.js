@@ -1,5 +1,5 @@
 const token = localStorage.getItem('token');
-const user = JSON.parse(localStorage.getItem('user') || 'null');
+let user = JSON.parse(localStorage.getItem('user') || 'null');
 
 if (!token) {
   window.location.href = '/auth.html';
@@ -25,12 +25,16 @@ const elements = {
   formTitle: document.querySelector('#formTitle'),
   formMessage: document.querySelector('#formMessage'),
   cancelEditButton: document.querySelector('#cancelEditButton'),
+  budgetForm: document.querySelector('#budgetForm'),
+  budgetLimitInput: document.querySelector('#budgetLimitInput'),
+  budgetMessage: document.querySelector('#budgetMessage'),
   searchInput: document.querySelector('#searchInput'),
   categoryInput: document.querySelector('#categoryInput'),
   statusFilter: document.querySelector('#statusFilter')
 };
 
-elements.userBadge.textContent = user ? `${user.name} · Budget ${formatMoney(user.monthlyBudgetLimit)}` : '';
+renderUserBadge();
+elements.budgetLimitInput.value = user?.monthlyBudgetLimit ?? 0;
 
 elements.logoutButton.addEventListener('click', () => {
   localStorage.removeItem('token');
@@ -52,6 +56,12 @@ elements.form.addEventListener('submit', async (event) => {
     notes: formData.notes
   };
   const id = formData.id;
+  const validationErrors = validateSubscriptionPayload(payload);
+
+  if (validationErrors.length > 0) {
+    elements.formMessage.textContent = validationErrors.join(' ');
+    return;
+  }
 
   try {
     const response = await api(id ? `/api/subscriptions/${id}` : '/api/subscriptions', {
@@ -64,6 +74,30 @@ elements.form.addEventListener('submit', async (event) => {
     return response;
   } catch (error) {
     elements.formMessage.textContent = error.message;
+  }
+});
+
+elements.budgetForm.addEventListener('submit', async (event) => {
+  event.preventDefault();
+  const monthlyBudgetLimit = Number(elements.budgetLimitInput.value);
+
+  if (!Number.isFinite(monthlyBudgetLimit) || monthlyBudgetLimit < 0) {
+    elements.budgetMessage.textContent = 'Budget limit must be zero or a positive number.';
+    return;
+  }
+
+  try {
+    const data = await api('/api/users/me/budget', {
+      method: 'PATCH',
+      body: JSON.stringify({ monthlyBudgetLimit })
+    });
+    user = data.user;
+    localStorage.setItem('user', JSON.stringify(user));
+    elements.budgetMessage.textContent = 'Budget limit updated.';
+    renderUserBadge();
+    await refreshDashboard();
+  } catch (error) {
+    elements.budgetMessage.textContent = error.message;
   }
 });
 
@@ -110,6 +144,10 @@ function renderSummary() {
   elements.budgetAlert.textContent = stats.isBudgetExceeded
     ? `Monthly subscription spending is ${formatMoney(Math.abs(stats.budgetRemaining))} over the budget limit.`
     : '';
+}
+
+function renderUserBadge() {
+  elements.userBadge.textContent = user ? `${user.name} · Budget ${formatMoney(user.monthlyBudgetLimit)}` : '';
 }
 
 function renderTable() {
@@ -215,6 +253,28 @@ function resetForm() {
   elements.form.billingCycle.value = 'monthly';
   elements.formTitle.textContent = 'Add subscription';
   elements.cancelEditButton.classList.add('hidden');
+}
+
+function validateSubscriptionPayload(payload) {
+  const errors = [];
+
+  if (payload.name.trim().length < 2) {
+    errors.push('Name must be at least 2 characters.');
+  }
+
+  if (payload.category.trim().length < 2) {
+    errors.push('Category must be at least 2 characters.');
+  }
+
+  if (!Number.isFinite(payload.price) || payload.price <= 0) {
+    errors.push('Price must be greater than zero.');
+  }
+
+  if (!payload.nextPaymentDate) {
+    errors.push('Next payment date is required.');
+  }
+
+  return errors;
 }
 
 async function api(url, options = {}) {

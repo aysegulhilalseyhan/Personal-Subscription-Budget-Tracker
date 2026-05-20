@@ -27,8 +27,17 @@ function findUserById(id) {
     .get(id);
 }
 
+function updateMonthlyBudgetLimit(id, monthlyBudgetLimit) {
+  getDb()
+    .prepare('UPDATE users SET monthly_budget_limit = ? WHERE id = ?')
+    .run(monthlyBudgetLimit, id);
+
+  return findUserById(id);
+}
+
 module.exports = {
   createUser,
   findUserByEmail,
-  findUserById
+  findUserById,
+  updateMonthlyBudgetLimit
 };
