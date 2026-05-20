@@ -31,6 +31,16 @@ Many people pay for several recurring services such as music, cloud storage, str
 - API documentation: Swagger UI
 - Testing: Node.js built-in test runner
 
+## Screenshots
+
+### Dashboard with Available Budget
+
+![Dashboard with available budget](./screenshots/dashboard-available-budget.png)
+
+### Budget Exceeded Warning
+
+![Budget exceeded warning](./screenshots/dashboard-budget-exceeded.png)
+
 ## Requirement Mapping
 
 | Requirement | Implementation |
